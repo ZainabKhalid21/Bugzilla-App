@@ -31,6 +31,7 @@ class CustomLoginView(LoginView):
     template_name = 'login.html'
     
     
+    
 #***********************************FORGOT PASSWORD*********************************************************#
 
 class ForgotPassword(PasswordResetView):
