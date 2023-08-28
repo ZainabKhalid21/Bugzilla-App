@@ -1,4 +1,4 @@
-from django.contrib.auth import login , get_user_model
+from django.contrib.auth import get_user_model
 import logging
 from django.shortcuts import render, redirect ,get_object_or_404
 from .forms import Registration , UserForm
@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.urls import reverse_lazy
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.decorators import login_required , permission_required
+from django.contrib.auth.decorators import login_required 
 from django.contrib.auth.views import LoginView,  PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
 User = get_user_model()
@@ -42,10 +42,10 @@ class ForgotPassword(PasswordResetView):
         email = form.cleaned_data['email'] 
         user = User.objects.get(email=email)  
 
-        # Generate a token for the user
+    
         token = default_token_generator.make_token(user)
 
-        # Construct the reset URL
+    
         reset_url = self.request.build_absolute_uri(reverse_lazy('password_reset_confirm', 
         kwargs={
             'uidb64': self.request.user.pk,
@@ -101,7 +101,7 @@ def user_create(request):
             form = Registration()
         return render(request, 'user_create.html', {'form': form})
     else:
-        return redirect('user_list')  # Redirect unauthorized users
+        return redirect('user_list') 
 
 @login_required
 def user_edit(request, pk):
@@ -116,7 +116,7 @@ def user_edit(request, pk):
             form = UserForm(instance=user)
         return render(request, 'user_edit.html', {'form': form, 'user': user})
     else:
-        return redirect('user_list')  # Redirect unauthorized users
+        return redirect('user_list')  
 
 @login_required
 def user_delete(request, pk):
