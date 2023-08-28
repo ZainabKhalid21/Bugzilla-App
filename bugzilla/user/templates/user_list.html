@@ -1,0 +1,39 @@
+<!-- user_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>User List</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>User Type</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.get_user_type_display }}</td>
+          <td>
+            {% if user.is_superuser %}
+              Superuser
+            {% else %}
+              {% if user != request.user and request.user.is_superuser %}
+                <a href="{% url 'user_edit' user.pk %}">Edit</a> |
+                <a href="{% url 'user_delete' user.pk %}">Delete</a>
+              {% endif %}
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  {% if request.user.is_superuser %}
+    <a href="{% url 'user_create' %}">Create User</a>
+  {% endif %}
+{% endblock %}

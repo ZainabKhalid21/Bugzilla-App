@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Welcome to Your Dashboard, {{ user.username }}</h2>
+  
+  {% if user.is_superuser %}
+    <p>YOU ARE A SUPERUSER</p>
+  {% else %}
+    <p>Your user type: {{ user.user_type }}</p>
+    {% if user.user_type == 'd' %}
+      <p>You have developer content.</p>
+    {% elif user.user_type == 'm' %}
+      <p>You have manager content.</p>
+    {% elif user.user_type == 'q' %}
+      <p>You have QA content.</p>
+    {% endif %}
+  {% endif %}
+{% endblock %}
