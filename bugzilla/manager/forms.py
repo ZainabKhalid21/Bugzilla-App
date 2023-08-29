@@ -17,7 +17,7 @@ class ProjectForm(forms.ModelForm):
   
     class Meta:
         model = Project
-        fields = ['project_name', 'project_id', 'manager_id', 'developer_id', 'qa_id']
+        fields = ['project_name','manager_id', 'developer_id', 'qa_id']
 
 class AddQAForm(forms.Form):
     qa = forms.ModelChoiceField(queryset=User.objects.filter(user_type='q'), label='Select QA')

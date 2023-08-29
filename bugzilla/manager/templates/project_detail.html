@@ -11,7 +11,7 @@
                     <h2 class="mb-0">{{ project.project_name }}</h2>
                 </div>
                 <div class="card-body">
-                    <p><strong>Project ID:</strong> {{ project.project_id }}</p>
+                    <p><strong>Project ID:</strong> {{ project.id }}</p>
                     <p><strong>Manager:</strong> {{ project.manager_id }}</p>
                     <p><strong>Developers:</strong>
                         {% for developer in project.developer_id.all %}
