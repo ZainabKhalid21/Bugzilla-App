@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Project Detail{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">{{ project.project_name }}</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Project ID:</strong> {{ project.id }}</p>
+                    <p><strong>Manager:</strong> {{ project.manager_id }}</p>
+                    <p><strong>Developers:</strong>
+                        {% for developer in project.developer_id.all %}
+                            <span class="badge badge-primary">{{ developer.username }}</span>
+                            {% if user == project.manager_id %}
+                                <a href="{% url 'remove_developer' project.id developer.id %}">Remove Developer</a>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p><strong>QAs:</strong>
+                        {% for qa in project.qa_id.all %}
+                            <span class="badge badge-success">{{ qa.username }}</span>
+                            {% if user == project.manager_id %}
+                                <a href="{% url 'remove_qa' project.id qa.id %}">Remove QA</a>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+            <a href="{% url 'project_list' %}">Back to Project List</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

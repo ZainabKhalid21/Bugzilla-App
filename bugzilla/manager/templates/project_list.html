@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Project List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Project List</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for project in projects %}
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="{% url 'project_detail' project.id %}" class="text-dark">{{ project.project_name }}</a>
+                                    {% if user.is_authenticated and user.user_type == 'm' and user == project.manager_id %}
+                                        <div class="btn-group">
+                                            <a href="{% url 'edit_project' project.id %}" class="btn btn-sm btn-outline-primary mr-1">Edit</a>
+                                            <a href="{% url 'delete_project' project.id %}" class="btn btn-sm btn-outline-danger mr-1">Delete</a>
+                                            <a href="{% url 'add_developer' project.id %}" class="btn btn-sm btn-outline-success mr-1">Add Developer</a>
+                                            <a href="{% url 'add_qa' project.id%}" class="btn btn-sm btn-outline-warning mr-1">Add QA</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <a href="{% url 'homepage' %}">Back to homepage</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
