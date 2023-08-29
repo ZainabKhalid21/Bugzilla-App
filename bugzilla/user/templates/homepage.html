@@ -7,12 +7,29 @@
     <p>YOU ARE A SUPERUSER</p>
   {% else %}
     <p>Your user type: {{ user.user_type }}</p>
-    {% if user.user_type == 'd' %}
-      <p>You have developer content.</p>
-    {% elif user.user_type == 'm' %}
+
+    {% if user.user_type == 'm' %}
+      <!-- Display Manager-specific content -->
       <p>You have manager content.</p>
-    {% elif user.user_type == 'q' %}
+      <ul>
+        <li><a href="{% url 'create_project' %}">Create Project</a></li>
+        <li><a href="{% url 'project_list'%}">Projects</a></li>
+
+
+        <!-- ... Add more Manager functionalities here -->
+      </ul>
+      {% elif user.user_type == 'd' %}
+            <!-- Display Developer-specific content -->
+      <p>You have developer content.</p>
+    
+    {% elif user.user_type == 'qa' %}
+      <!-- Display QA-specific content -->
       <p>You have QA content.</p>
+      <ul>
+        <li><a href="{% url 'qa:report_bug' %}">Report Bug</a></li>
+        <li><a href="{% url 'qa:all_projects' %}">All Projects</a></li>
+        <!-- ... Add more QA functionalities here -->
+      </ul>
     {% endif %}
   {% endif %}
 {% endblock %}

@@ -47,7 +47,7 @@
             </li>
             {% elif request.resolver_match.url_name == 'signup' %}
             <li class="nav-item">
-                <span class="nav-link">Don't have an account? <a href="{% url 'login' %}">Login in</a></span>
+                <span class="nav-link">Already have an account? <a href="{% url 'login' %}">Login in</a></span>
             </li>
             {% elif request.resolver_match.url_name == 'login' %}
                 <li class="nav-item">
