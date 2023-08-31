@@ -85,11 +85,7 @@ def assign_bug(request, bug_id):
 @login_required
 def mark_resolved(request, bug_id):
     bug = get_object_or_404(Bug, pk=bug_id, developer_id=request.user, bug_status='started')
-    import pdb;
-    pdb.set_trace()
     if request.method == 'POST':
-        import pdb;
-        pdb.set_trace()
         if bug.bug_status == 'started':
             bug.bug_status = 'resolved'
             bug.save()

@@ -155,13 +155,10 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
-
-import cloudinary
-          
 cloudinary.config( 
-  cloud_name = "duxtimkds", 
-  api_key = "153289917711317", 
-  api_secret = "LjIeVcWKQH3q0tNCWlt-kh_Qn2Y" 
+  cloud_name = env('cloud_name') , 
+  api_key = env('api_key'), 
+  api_secret = env('api_secret') 
 )
 
 
