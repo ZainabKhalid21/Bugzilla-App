@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load static %}  <!-- Load the static tag library -->
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="mb-0">Create Bug</h2>
+          </div>
+          <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-primary">Create Bug</button>
+              
+              {% if form.errors %}
+                <div class="alert alert-danger mt-3">
+                  <ul>
+                    {% for field_errors in form.errors %}
+                      <li>{{ field_errors }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+            </form>
+          </div>
+          <div class="card-footer">
+              <a href="{% url 'homepage' %}" class="btn btn-primary">Back to Homepage</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{% static 'jquery-3.7.1.min.js' %}"></script>
+  <script src="{% static 'bug_dropdown.js' %}"></script>
+  
+{% endblock %}

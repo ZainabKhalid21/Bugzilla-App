@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from decouple import config
 import environ
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import os
+
 
 env = environ.Env()
 environ.Env.read_env()
@@ -38,12 +43,14 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'user',
     'manager',
+    'bug',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary'
     
 ]
 
@@ -130,6 +137,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -146,3 +154,14 @@ EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+
+import cloudinary
+          
+cloudinary.config( 
+  cloud_name = "duxtimkds", 
+  api_key = "153289917711317", 
+  api_secret = "LjIeVcWKQH3q0tNCWlt-kh_Qn2Y" 
+)
+
+

@@ -1,9 +1,27 @@
 from django.shortcuts import render, redirect , get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm , AddDeveloperForm, AddQAForm 
 from .models import Project
 from .decorators import get_project
 from user.models import User
 
+
+#******************************************PROJECT****************************************#
+@login_required
+def project_list(request):
+    if request.user.user_type == 'd':
+        projects = Project.objects.filter(developer_id=request.user)
+    else:
+        projects = Project.objects.all()
+    
+    return render(request, 'project_list.html', {'projects': projects})
+
+@get_project
+def project_detail(request, project):
+    return render(request, 'project_detail.html', {'project': project})
+
+
+#******************************************MANAGER CRUD****************************************#
 def create_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -16,14 +34,6 @@ def create_project(request):
     else:
         form = ProjectForm()
     return render(request, 'create_project.html', {'form': form})
-
-def project_list(request):
-    projects = Project.objects.all()
-    return render(request, 'project_list.html', {'projects': projects})
-
-@get_project
-def project_detail(request, project):
-    return render(request, 'project_detail.html', {'project': project})
 
 @get_project
 def edit_project(request, project):
@@ -47,7 +57,7 @@ def delete_project(request, project):
     
     return render(request, 'delete_project.html', {'project': project})
 
-
+#******************************************MANAGER ADD AND REMOVE DEVELOPER****************************************#
 @get_project
 def add_developer(request, project):
     if request.method == 'POST':
@@ -72,6 +82,8 @@ def remove_developer(request, project, developer_id):
     
     return render(request, 'remove_developer.html', {'project': project, 'developer': developer})
 
+
+#******************************************MANAGER ADD AND REMOVE QA****************************************#
 @get_project
 def add_qa(request, project):
     
@@ -95,3 +107,6 @@ def remove_qa(request, project, qa_id):
         return redirect('project_detail', project_id=project.id)
     
     return render(request, 'remove_qa.html', {'project': project, 'qa': qa})
+
+
+    #*********************************************************************************************#
