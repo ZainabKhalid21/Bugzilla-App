@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Mark Bug Resolved</h2>
+                </div>
+                <div class="card-body">
+                    <h4>Confirm Resolution</h4>
+                    <p>Do you want to mark this bug as resolved?</p>
+                    <form method="post" action="{% url 'mark_resolved' bug_id=bug.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Mark Resolved</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

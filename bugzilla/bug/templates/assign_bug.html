@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Bug Assignment</h2>
+                </div>
+                <div class="card-body">
+                    <h4>Bug Status</h4>
+                    <p><strong>Bug ID:</strong> {{ bug.id }}</p>
+                    <p><strong>Status:</strong> {{ bug.bug_status }}</p>
+                    
+                    {% if show_assign_button %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Assign Me</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,35 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Welcome to Your Dashboard, {{ user.username }}</h2>
-  
-  {% if user.is_superuser %}
-    <p>YOU ARE A SUPERUSER</p>
-  {% else %}
-    <p>Your user type: {{ user.user_type }}</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">Welcome to Your Dashboard, {{ user.username }}</h2>
+        </div>
+        <div class="card-body">
+          {% if user.is_superuser %}
+            <p class="text-info">YOU ARE A SUPERUSER</p>
+          {% else %}
+            <p class="mb-0">Your user type: <span class="font-weight-bold">{{ user.user_type }}</span></p>
 
-    {% if user.user_type == 'm' %}
-      <!-- Display Manager-specific content -->
-      <p>You have manager content.</p>
-      <ul>
-        <li><a href="{% url 'create_project' %}">Create Project</a></li>
-        <li><a href="{% url 'project_list'%}">Projects</a></li>
+            {% if user.user_type == 'm' %}
+              <p>You have manager content.</p>
+              <ul class="list-group">
+                <li class="list-group-item"><a href="{% url 'create_project' %}" class="text-info font-weight-bold">Create Project</a></li>
+                <li class="list-group-item"><a href="{% url 'project_list'%}" class="text-info font-weight-bold">Projects</a></li>
+                <li class="list-group-item"><a href="{% url 'bug_list'%}" class="text-info font-weight-bold">Bugs</a></li>
+              </ul>
 
-
-        <!-- ... Add more Manager functionalities here -->
-      </ul>
-      {% elif user.user_type == 'd' %}
-            <!-- Display Developer-specific content -->
-      <p>You have developer content.</p>
-    
-    {% elif user.user_type == 'qa' %}
-      <!-- Display QA-specific content -->
-      <p>You have QA content.</p>
-      <ul>
-        <li><a href="{% url 'qa:report_bug' %}">Report Bug</a></li>
-        <li><a href="{% url 'qa:all_projects' %}">All Projects</a></li>
-        <!-- ... Add more QA functionalities here -->
-      </ul>
-    {% endif %}
-  {% endif %}
+            {% elif user.user_type == 'd' %}
+              <p>You have developer content.</p>
+              <ul class="list-group">
+                <li class="list-group-item"><a href="{% url 'project_list'%}" class="text-info font-weight-bold">Project assigned to developer</a></li>
+              </ul>
+            
+            {% elif user.user_type == 'q' %}
+              <p>You have QA content.</p>
+              <ul class="list-group">
+                <li class="list-group-item"><a href="{% url 'project_list'%}" class="text-info font-weight-bold">Projects</a></li>
+                <li class="list-group-item"><a href="{% url 'bug_list'%}" class="text-info font-weight-bold">Bugs</a></li>
+              </ul>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

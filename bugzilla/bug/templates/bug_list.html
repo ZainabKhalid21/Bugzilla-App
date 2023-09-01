@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">Bug List</h2>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Bug Title</th>
+                  {% if user.is_authenticated and user.user_type == 'q' %}
+                    <th>Actions</th>
+                  {% endif %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for bug in bugs %}
+                  <tr>
+                    <td><strong><a href="{% url 'bug_detail' bug.id %}" class="text-info">{{ bug.bug_title }}</a></strong></td>
+                    {% if user.is_authenticated and user.user_type == 'q' %}
+                      <td>
+                        <div class="btn-group">
+                          <a href="{% url 'edit_bug' bug.id %}" class="btn btn-sm btn-outline-primary mr-1">Edit</a>
+                          <a href="{% url 'delete_bug' bug.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                      </td>
+                    {% endif %}
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="{% url 'homepage' %}" class="btn btn-primary">Back to Homepage</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

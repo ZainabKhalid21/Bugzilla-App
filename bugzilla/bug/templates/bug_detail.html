@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Bug Detail{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">{{ bug.bug_title }}</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Project:</strong> {{ bug.project_id.project_name }}</p>
+                    <p><strong>Deadline:</strong> {{ bug.bug_deadline }}</p>
+                    <p><strong>Type:</strong> {{ bug.bug_type }}</p>
+                    <p><strong>Status:</strong> {{ bug.bug_status }}</p>
+                    <p><strong>Creator:</strong> {{ bug.qa_id }}</p>
+                    <p><strong>Screenshot:</strong></p>
+                    <img src="{{ bug.bug_screenshot.url }}" class="img-fluid">
+                </div>
+               
+            </div>
+            <div class="card-footer">
+              <a href="{% url 'project_list' %}" class="btn btn-primary">Back to Projects</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

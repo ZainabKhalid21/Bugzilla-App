@@ -5,12 +5,16 @@ from .forms import Registration , UserForm
 from .models import User
 from django.core.mail import send_mail
 from django.conf import settings
+from .decorators import get_user
 from django.urls import reverse_lazy
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth.views import LoginView,  PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
 User = get_user_model()
+
+def custom_404(request, exception=None):
+    return render(request, 'error404.html', status=500)
 
 #**************************************SIGNUP********************************************************#
 def signup(request):
@@ -105,8 +109,8 @@ def user_create(request):
         return redirect('user_list') 
 
 @login_required
-def user_edit(request, pk):
-    user = get_object_or_404(User, pk=pk)
+@get_user
+def user_edit(request, user , pk):
     if request.user.is_superuser and not user.is_superuser:
         if request.method == 'POST':
             form = UserForm(request.POST, instance=user)
@@ -117,11 +121,11 @@ def user_edit(request, pk):
             form = UserForm(instance=user)
         return render(request, 'user_edit.html', {'form': form, 'user': user})
     else:
-        return redirect('user_list')  
+        return redirect('user_list') 
 
 @login_required
-def user_delete(request, pk):
-    user = get_object_or_404(User, pk=pk)
+@get_user
+def user_delete(request, user, pk):
     if request.user.is_superuser and not user.is_superuser and user != request.user:
         if request.method == 'POST':
             user.delete()
