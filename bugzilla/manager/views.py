@@ -7,6 +7,10 @@ from user.models import User
 
 
 #******************************************PROJECT****************************************#
+
+def custom_404(request, exception):
+    return render(request, 'error404.html', status=500)
+
 @login_required
 def project_list(request):
     if request.user.user_type == 'd':

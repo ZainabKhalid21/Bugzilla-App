@@ -5,6 +5,10 @@ from .forms import BugForm
 from manager.models import Project
 
 #******************************************Bug ROLES****************************************#
+
+def custom_404(request, exception):
+    return render(request, 'error404.html', status=500)
+
 @login_required
 def bug_detail(request, bug_id):
     bug = get_object_or_404(Bug, id = bug_id)

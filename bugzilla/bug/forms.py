@@ -1,6 +1,5 @@
 from django import forms
 from .models import Bug
-from .models import BugStatus
 from cloudinary.forms import CloudinaryFileField
 
 

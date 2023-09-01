@@ -13,6 +13,9 @@ from django.contrib.auth.views import LoginView,  PasswordResetView, PasswordRes
 
 User = get_user_model()
 
+def custom_404(request, exception=None):
+    return render(request, 'error404.html', status=500)
+
 #**************************************SIGNUP********************************************************#
 def signup(request):
     
