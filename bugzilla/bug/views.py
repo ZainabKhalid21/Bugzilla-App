@@ -5,10 +5,12 @@ from .forms import BugForm
 from manager.models import Project
 
 #******************************************Bug ROLES****************************************#
+@login_required
 def bug_detail(request, bug_id):
     bug = get_object_or_404(Bug, id = bug_id)
     return render(request, 'bug_detail.html', {'bug': bug})
 
+@login_required
 def bug_list(request):
     bugs = Bug.objects.all()
     return render(request, 'bug_list.html', {'bugs': bugs})

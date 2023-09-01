@@ -15,7 +15,7 @@ def validate_cloudinary_image_extension(value):
 class Bug(models.Model):
     bug_title = models.CharField(max_length=100)
     bug_deadline = models.DateTimeField() 
-    bug_screenshot = CloudinaryField('image' , null=True, 
+    bug_screenshot = CloudinaryField('image' , 
                             blank=True,
                             validators=[validate_cloudinary_image_extension])
     

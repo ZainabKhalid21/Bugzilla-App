@@ -16,12 +16,14 @@ def project_list(request):
     
     return render(request, 'project_list.html', {'projects': projects})
 
+@login_required
 @get_project
 def project_detail(request, project):
     return render(request, 'project_detail.html', {'project': project})
 
 
 #******************************************MANAGER CRUD****************************************#
+@login_required
 def create_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -35,6 +37,7 @@ def create_project(request):
         form = ProjectForm()
     return render(request, 'create_project.html', {'form': form})
 
+@login_required
 @get_project
 def edit_project(request, project):
     if request.method == 'POST':
@@ -47,7 +50,7 @@ def edit_project(request, project):
     
     return render(request, 'edit_project.html', {'form': form, 'project': project})
 
-
+@login_required
 @get_project
 def delete_project(request, project):
     
@@ -58,6 +61,7 @@ def delete_project(request, project):
     return render(request, 'delete_project.html', {'project': project})
 
 #******************************************MANAGER ADD AND REMOVE DEVELOPER****************************************#
+@login_required
 @get_project
 def add_developer(request, project):
     if request.method == 'POST':
@@ -71,7 +75,7 @@ def add_developer(request, project):
     
     return render(request, 'add_developer.html', {'form': form, 'project': project})
 
-
+@login_required
 @get_project
 def remove_developer(request, project, developer_id):
     developer = get_object_or_404(User, id=developer_id)
@@ -84,6 +88,7 @@ def remove_developer(request, project, developer_id):
 
 
 #******************************************MANAGER ADD AND REMOVE QA****************************************#
+@login_required
 @get_project
 def add_qa(request, project):
     
@@ -98,6 +103,7 @@ def add_qa(request, project):
     
     return render(request, 'add_qa.html', {'form': form, 'project': project})
 
+@login_required
 @get_project
 def remove_qa(request, project, qa_id):
     qa = get_object_or_404(User, id=qa_id)

@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bug', '0009_alter_bug_unique_together'),
+        ('bug', '0008_alter_bug_unique_together'),
     ]
 
     operations = [
