@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Remove QA from Project "{{ project.project_name }}"</h2>
+    <p>Are you sure you want to remove {{ qa.username }} from this project?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Remove QA</button>
+    </form>
+</div>
+{% endblock %}
