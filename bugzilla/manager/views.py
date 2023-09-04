@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect , get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm , AddDeveloperForm, AddQAForm 
 from .models import Project
-from .decorators import get_project
+from .decorators import get_project , user_role_required
 from user.models import User
 
 
@@ -28,7 +28,9 @@ def project_detail(request, project):
 
 #******************************************MANAGER CRUD****************************************#
 @login_required
+@user_role_required(allowed_roles=['m'])
 def create_project(request):
+ 
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():
@@ -39,9 +41,12 @@ def create_project(request):
             return redirect('project_list') 
     else:
         form = ProjectForm()
+        form.fields['manager_id'].queryset = User.objects.filter(id=request.user.id, user_type='m')
+        
     return render(request, 'create_project.html', {'form': form})
 
 @login_required
+@user_role_required(allowed_roles=['m'])
 @get_project
 def edit_project(request, project):
     if request.method == 'POST':
@@ -55,7 +60,9 @@ def edit_project(request, project):
     return render(request, 'edit_project.html', {'form': form, 'project': project})
 
 @login_required
+@user_role_required(allowed_roles=['m'])
 @get_project
+
 def delete_project(request, project):
     
     if request.method == 'POST':
@@ -66,6 +73,7 @@ def delete_project(request, project):
 
 #******************************************MANAGER ADD AND REMOVE DEVELOPER****************************************#
 @login_required
+@user_role_required(allowed_roles=['m'])
 @get_project
 def add_developer(request, project):
     if request.method == 'POST':
@@ -80,6 +88,7 @@ def add_developer(request, project):
     return render(request, 'add_developer.html', {'form': form, 'project': project})
 
 @login_required
+@user_role_required(allowed_roles=['m'])
 @get_project
 def remove_developer(request, project, developer_id):
     developer = get_object_or_404(User, id=developer_id)
@@ -93,6 +102,7 @@ def remove_developer(request, project, developer_id):
 
 #******************************************MANAGER ADD AND REMOVE QA****************************************#
 @login_required
+@user_role_required(allowed_roles=['m'])
 @get_project
 def add_qa(request, project):
     
@@ -108,6 +118,7 @@ def add_qa(request, project):
     return render(request, 'add_qa.html', {'form': form, 'project': project})
 
 @login_required
+@user_role_required(allowed_roles=['m'])
 @get_project
 def remove_qa(request, project, qa_id):
     qa = get_object_or_404(User, id=qa_id)

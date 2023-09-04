@@ -1,16 +1,16 @@
 from django import forms
 from .models import Project
-from user.models import User  # Replace this with the actual import path for your User model
+from user.models import User 
 
 class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
-        manager_users = User.objects.filter(user_type='m')
+        
         developer_users = User.objects.filter(user_type='d')
         qa_users = User.objects.filter(user_type='q')
         
-        self.fields['manager_id'].queryset = manager_users
+
         self.fields['developer_id'].queryset = developer_users
         self.fields['qa_id'].queryset = qa_users
         

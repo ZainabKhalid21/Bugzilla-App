@@ -31,14 +31,21 @@ class Bug(models.Model):
         current_time = timezone.now()
         if self.bug_deadline <= current_time:
             raise ValidationError("Bug deadline must be in the future.")
+    
         
-        existing_bugs = Bug.objects.filter(bug_title=self.bug_title)
+        # existing_bugs = Bug.objects.filter(bug_title=self.bug_title)
+        # if self.pk:
+        #     existing_bugs = existing_bugs.exclude(pk=self.pk)
+        # if existing_bugs.exists():
+        #     raise ValidationError("Bug with this title already exists in the project.")
+
+        existing_bugs = Bug.objects.filter(bug_title=self.bug_title, project_id=self.project_id_id)
         if self.pk:
             existing_bugs = existing_bugs.exclude(pk=self.pk)
         if existing_bugs.exists():
             raise ValidationError("Bug with this title already exists in the project.")
 
-
+        
     class Meta:
         unique_together = ('bug_title', 'project_id')
     
