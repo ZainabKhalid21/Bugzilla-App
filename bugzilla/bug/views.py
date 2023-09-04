@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Bug , BugStatus 
 from .forms import BugForm
 from manager.models import Project
+from .decorators import user_role_required
 
 #******************************************Bug ROLES****************************************#
 
@@ -22,6 +23,7 @@ def bug_list(request):
 #******************************************QA ROLES****************************************#    
 
 @login_required
+@user_role_required(allowed_roles=['q'])
 def create_bug(request, project_id):
     project = Project.objects.get(id=project_id)
 
@@ -33,6 +35,7 @@ def create_bug(request, project_id):
             bug.project_id = project
             bug.developer_id = request.user
             bug.save()
+            
             return redirect('bug_detail', bug.id)
     else:
         initial_data = {'bug_type': 'bug'}
@@ -43,6 +46,7 @@ def create_bug(request, project_id):
 
 
 @login_required
+@user_role_required(allowed_roles=['q'])
 def edit_bug(request, bug_id):
     bug = get_object_or_404(Bug, id=bug_id)
 
@@ -60,6 +64,7 @@ def edit_bug(request, bug_id):
         return redirect('bug_detail', bug_id=bug_id)
 
 @login_required
+@user_role_required(allowed_roles=['q'])
 def delete_bug(request, bug_id):
     bug = get_object_or_404(Bug, id=bug_id)
     if request.user.user_type == 'q':
@@ -73,6 +78,7 @@ def delete_bug(request, bug_id):
 
 #******************************************DEVELOPER ROLES****************************************#
 @login_required
+@user_role_required(allowed_roles=['d'])
 def assign_bug(request, bug_id):
     bug = Bug.objects.get(pk=bug_id)
     
@@ -89,6 +95,7 @@ def assign_bug(request, bug_id):
     return render(request, 'assign_bug.html', {'bug': bug, 'show_assign_button': show_assign_button})
 
 @login_required
+@user_role_required(allowed_roles=['d'])
 def mark_resolved(request, bug_id):
     bug = get_object_or_404(Bug, pk=bug_id, developer_id=request.user, bug_status='started')
     if request.method == 'POST':

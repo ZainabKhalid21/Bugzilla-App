@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 import logging
-from django.shortcuts import render, redirect ,get_object_or_404
+from django.shortcuts import render, redirect 
 from .forms import Registration , UserForm
 from .models import User
 from django.core.mail import send_mail
@@ -89,7 +89,6 @@ def homepage(request):
 #**************************************CRUD OPERATIONS***********************************************#
 
 @login_required
-
 def user_list(request):
     users = User.objects.all()
     return render(request, 'user_list.html', {'users': users})
